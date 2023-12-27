@@ -18,7 +18,7 @@ public class mainClass {
             MysqlDataSource resource = new MysqlDataSource();
             resource.setUser("root");
             resource.setPassword("");
-            resource.setDatabaseName("data_produk");
+            resource.setDatabaseName("sembako");
             resource.setPortNumber(3306);
             resource.setServerName("localhost");
             resource.setServerTimezone("Asia/Jakarta");
