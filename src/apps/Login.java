@@ -4,6 +4,8 @@
  */
 package apps;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
@@ -22,6 +24,14 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+
+        txtPass.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Panggil fungsi atau kode yang ingin dijalankan saat tombol Enter ditekan
+                loginAction();
+            }
+        });
     }
 
     /**
@@ -131,28 +141,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
         // TODO add your handling code here:
-        try {
-            String sql = "SELECT * FROM login WHERE username=? AND password=?";
-            try (Connection c = mainClass.sambungkeDB(); PreparedStatement pst = c.prepareStatement(sql)) {
-                pst.setString(1, txtUser.getText());
-                pst.setString(2, txtPass.getText());
-                ResultSet rs = pst.executeQuery();
-
-                if (rs.next()) {
-                    this.setVisible(false);
-                    menu MU = new menu();
-                    MU.updateNamaLabel(txtUser.getText());
-                    MU.setVisible(true);
-                } else if (txtUser.getText().isEmpty() || txtPass.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Silahkan Masukan Username dan Password");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Username & Password Salah!", "Message", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-
+        loginAction();                                                      
     }//GEN-LAST:event_btnLogActionPerformed
 
     private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
@@ -204,4 +193,28 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
+
+    private void loginAction() {
+        try {
+            String sql = "SELECT * FROM login WHERE username=? AND password=?";
+            try (Connection c = mainClass.sambungkeDB(); PreparedStatement pst = c.prepareStatement(sql)) {
+                pst.setString(1, txtUser.getText());
+                pst.setString(2, txtPass.getText());
+                ResultSet rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    this.setVisible(false);
+                    newGudang ng = new newGudang();
+                    ng.updateNamaLabel(txtUser.getText());
+                    ng.setVisible(true);
+                } else if (txtUser.getText().isEmpty() || txtPass.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Silahkan Masukan Username dan Password");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Username & Password Salah!", "Message", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
 }

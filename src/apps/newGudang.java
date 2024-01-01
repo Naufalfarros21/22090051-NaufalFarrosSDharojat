@@ -5,6 +5,8 @@
 package apps;
 
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,14 +21,19 @@ import main.mainClass;
  */
 public class newGudang extends javax.swing.JFrame {
 
-    
-
     /**
      * Creates new form newGudang
      */
     public newGudang() {
         initComponents();
         displayDataP("");
+
+        txtCariP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleScannedCode(txtCariP.getText());
+            }
+        });
     }
 
     /**
@@ -66,8 +73,10 @@ public class newGudang extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         btnDelet = new javax.swing.JButton();
         txtCariP = new javax.swing.JTextField();
-        btnCariP = new javax.swing.JButton();
-        btnKembali = new javax.swing.JButton();
+        btnLogoutM = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        lblNamaM = new javax.swing.JLabel();
+        btnResetP = new javax.swing.JButton();
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Kode Produk");
@@ -158,7 +167,7 @@ public class newGudang extends javax.swing.JFrame {
 
         jLabel5.setText("Kategori");
 
-        jLabel6.setText("Harga Satuan");
+        jLabel6.setText("Harga");
 
         jLabel7.setText("Stok");
 
@@ -168,13 +177,21 @@ public class newGudang extends javax.swing.JFrame {
             }
         });
 
+        txtKp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtKpKeyTyped(evt);
+            }
+        });
+
+        txtHs.setText("Rp.");
+
         txtStok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtStokActionPerformed(evt);
             }
         });
 
-        cmbKat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Makanan", "Minuman", "K.Dapur", "K.Mandi", "Sembako" }));
+        cmbKat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Makanan", "Minuman", "Sembako", "MCK" }));
 
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -213,19 +230,33 @@ public class newGudang extends javax.swing.JFrame {
             }
         });
 
-        btnCariP.setBackground(new java.awt.Color(204, 204, 204));
-        btnCariP.setText("CARI");
-        btnCariP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCariPActionPerformed(evt);
+        txtCariP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCariPKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCariPKeyTyped(evt);
             }
         });
 
-        btnKembali.setBackground(new java.awt.Color(204, 204, 204));
-        btnKembali.setText("<-- KEMBALI");
-        btnKembali.addActionListener(new java.awt.event.ActionListener() {
+        btnLogoutM.setBackground(new java.awt.Color(204, 204, 204));
+        btnLogoutM.setText("LOGOUT");
+        btnLogoutM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKembaliActionPerformed(evt);
+                btnLogoutMActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setText("HELLO");
+
+        lblNamaM.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblNamaM.setText("--------");
+
+        btnResetP.setText("RESET");
+        btnResetP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetPActionPerformed(evt);
             }
         });
 
@@ -238,39 +269,44 @@ public class newGudang extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNp)
-                            .addComponent(txtHs, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtId)
-                            .addComponent(txtKp)
-                            .addComponent(cmbKat, 0, 130, Short.MAX_VALUE))
-                        .addGap(41, 41, 41))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnSave)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEdit)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDelet))
-                            .addComponent(btnKembali))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(txtCariP, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCariP, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNp)
+                                    .addComponent(txtId)
+                                    .addComponent(txtKp)
+                                    .addComponent(cmbKat, 0, 130, Short.MAX_VALUE)
+                                    .addComponent(txtHs)
+                                    .addComponent(txtStok))
+                                .addGap(41, 41, 41))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(btnSave)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnEdit)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnDelet))
+                                    .addComponent(btnLogoutM))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNamaM, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnResetP)
+                        .addGap(27, 27, 27)
+                        .addComponent(txtCariP, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,7 +314,9 @@ public class newGudang extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCariP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCariP))
+                    .addComponent(jLabel9)
+                    .addComponent(lblNamaM)
+                    .addComponent(btnResetP))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -310,10 +348,10 @@ public class newGudang extends javax.swing.JFrame {
                             .addComponent(btnSave)
                             .addComponent(btnEdit)
                             .addComponent(btnDelet))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnKembali))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38))
+                        .addGap(58, 58, 58)
+                        .addComponent(btnLogoutM))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -323,9 +361,11 @@ public class newGudang extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(951, 951, 951)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 8, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,10 +398,25 @@ public class newGudang extends javax.swing.JFrame {
             String kategori = cmbKat.getSelectedItem().toString();
             String harga = txtHs.getText();
             String stok = txtStok.getText();
-            if (id_produk.isEmpty() || kode_produk.isEmpty() || nama_produk.isEmpty() || kategori.isEmpty() || harga.isEmpty() || stok.isEmpty()) {
+
+            // Memeriksaan kode_produk sudah digunakan
+            String checkDuplicateSql = "SELECT COUNT(*) FROM data_produk WHERE kode_produk = '" + kode_produk + "'";
+            Connection connection = mainClass.sambungkeDB();
+            Statement checkDuplicateStatement = connection.createStatement();
+            ResultSet resultSet = checkDuplicateStatement.executeQuery(checkDuplicateSql);
+            resultSet.next();
+            int count = resultSet.getInt(1);
+
+            if (count > 0) {
+                // Jika Kode produk sudah ada, tampilkan pesan kesalahan
+                JOptionPane.showMessageDialog(this, "Kode Produk sudah ada. Silakan gunakan kode yang berbeda.");
+
+            } else if (id_produk.isEmpty() || kode_produk.isEmpty() || nama_produk.isEmpty() || kategori.isEmpty() || harga.isEmpty() || stok.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Silahkan Isi Data Produk Dahulu Mas.....!!!");
+
             } else {
-                String sql = "INSERT INTO data_produk"
+                // Jika Kode produk belum ada, lakukan operasi INSERT
+                String insertSql = "INSERT INTO data_produk"
                         + "(`id_produk`, `kode_produk`, `nama_produk`, `kategori`, `harga`, `stok`)"
                         + "VALUES "
                         + "("
@@ -372,40 +427,33 @@ public class newGudang extends javax.swing.JFrame {
                         + "'" + harga + "',"
                         + "'" + stok + "'"
                         + ")";
-                System.out.println(sql);
-                Connection c = mainClass.sambungkeDB();
-                Statement st = c.createStatement();
-                st.executeUpdate(sql);
+                System.out.println(insertSql);
+
+                // Lanjutkan dengan eksekusi query INSERT
+                Statement insertStatement = connection.createStatement();
+                insertStatement.executeUpdate(insertSql);
                 newGudang.displayDataP("");
                 JOptionPane.showMessageDialog(this, "Data Berhasil ditambah ke DataBase!!");
+
+                // Mengosongkan semua JTextField
+                txtId.setText("");
+                txtKp.setText("");
+                txtNp.setText("");
+                cmbKat.setSelectedIndex(0);
+                txtHs.setText("Rp.");
+                txtStok.setText("");
             }
+
         } catch (HeadlessException | NumberFormatException | SQLException e) {
-            JOptionPane.showMessageDialog(this, "Data Gagal Ditambah Mas!!! \n"
-                    + "" + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Data Gagal Ditambah Mas!!! \n" + e.getMessage());
         }
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
         // TODO add your handling code here:
 
     }//GEN-LAST:event_btnCariActionPerformed
-
-    private void btnCariPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariPActionPerformed
-        // TODO add your handling code here:
-        try {
-            String kodeProdukToSearch = txtCariP.getText();
-
-            if (kodeProdukToSearch.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Silahkan isi Kode Produk terlebih dahulu");
-            } else {
-                // Panggil metode searchByKodeProduk untuk menampilkan hasil pencarian pada tabel
-                cariByKodeProduk(kodeProdukToSearch);
-            }
-        } catch (HeadlessException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        }
-
-    }//GEN-LAST:event_btnCariPActionPerformed
 
     private void btnDeletActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletActionPerformed
         // TODO add your handling code here:
@@ -426,7 +474,7 @@ public class newGudang extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih Baris untuk Dihapus!!");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Data Gagap Dihapus!! \n" + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Data Gagal Dihapus!! \n" + e.getMessage());
         }
 
     }//GEN-LAST:event_btnDeletActionPerformed
@@ -439,7 +487,7 @@ public class newGudang extends javax.swing.JFrame {
             return;
         }
 
-        // Ambil nilai-nilai dari baris terpilih
+        //Ambil nilai baris terpilih
         String id_produk = tblData.getValueAt(selectedRow, 0).toString();
         String kode_produk = tblData.getValueAt(selectedRow, 1).toString();
         String nama_produk = tblData.getValueAt(selectedRow, 2).toString();
@@ -447,18 +495,47 @@ public class newGudang extends javax.swing.JFrame {
         String harga = tblData.getValueAt(selectedRow, 4).toString();
         String stok = tblData.getValueAt(selectedRow, 5).toString();
 
-        // Buat objek EditForm dan tampilkan formulir pengeditan
+        // Tampilkan formulir pengeditan
         EditFormP editForm = new EditFormP(id_produk, kode_produk, nama_produk, kategori, harga, stok);
         editForm.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
-    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+    private void btnLogoutMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutMActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        
-        menu uiMenu = new menu();
-        uiMenu.setVisible(true);
-    }//GEN-LAST:event_btnKembaliActionPerformed
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah Kamu yakin ingin Keluar?", "Konfirmasi Keluar", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.dispose();
+
+            Login formLogin = new Login();
+            formLogin.setVisible(true);
+
+            System.exit(0);
+        }
+
+    }//GEN-LAST:event_btnLogoutMActionPerformed
+
+    public void updateNamaLabel(String username) {
+        lblNamaM.setText(username);
+    }
+
+    private void txtKpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKpKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtKpKeyTyped
+
+    private void txtCariPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariPKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariPKeyTyped
+
+    private void txtCariPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariPKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCariPKeyReleased
+
+    private void btnResetPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPActionPerformed
+        // TODO add your handling code here:
+        displayDataP("");
+    }//GEN-LAST:event_btnResetPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -497,10 +574,10 @@ public class newGudang extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCari;
-    private javax.swing.JButton btnCariP;
     private javax.swing.JButton btnDelet;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnKembali;
+    private javax.swing.JButton btnLogoutM;
+    private javax.swing.JButton btnResetP;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cmbKat;
     private javax.swing.JLabel jLabel1;
@@ -511,12 +588,14 @@ public class newGudang extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblNamaM;
     public static javax.swing.JTable tblData;
     private javax.swing.JTable tblDataCari;
     private javax.swing.JTextField txtCari;
@@ -548,13 +627,18 @@ public class newGudang extends javax.swing.JFrame {
                 model.addRow(data);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Untuk menampilkan pesan kesalahan
+            e.printStackTrace();
         }
     }
 
-    private void cariByKodeProduk(String kodeProduk) {
+    private void handleScannedCode(String scannedCode) {
         try {
-            String where = " WHERE kode_produk = '" + kodeProduk + "'";
+            if (scannedCode.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Silahkan Masukan Kode Produk Terlebih Dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            String where = " WHERE kode_produk = '" + scannedCode + "'";
 
             Object[] tabel = {"ID", "Kode Produk", "Nama Produk", "Kategori", "Harga", "Stok"};
             DefaultTableModel model = new DefaultTableModel(null, tabel);
@@ -564,20 +648,32 @@ public class newGudang extends javax.swing.JFrame {
             Statement st = c.createStatement();
             String sql = "SELECT * FROM data_produk " + where;
             ResultSet rs = st.executeQuery(sql);
+            
+            boolean found = false;
 
             while (rs.next()) {
                 String id_produk = rs.getString("id_produk");
                 String kode_produk = rs.getString("kode_produk");
                 String nama_produk = rs.getString("nama_produk");
                 String kategori = rs.getString("kategori");
-                String harga = rs.getString("harga");
+                String harga_satuan = rs.getString("harga");
                 String stok = rs.getString("stok");
 
-                Object[] data = {id_produk, kode_produk, nama_produk, kategori, harga, stok};
+                Object[] data = {id_produk, kode_produk, nama_produk, kategori, harga_satuan, stok};
                 model.addRow(data);
+                found = true;
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            
+            if (!found) {
+                JOptionPane.showMessageDialog(this, "Produk dengan kode " + scannedCode + " tidak ditemukan.", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+                
+                displayDataP("");
+            }
+
+            txtCariP.setText("");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
 
     }

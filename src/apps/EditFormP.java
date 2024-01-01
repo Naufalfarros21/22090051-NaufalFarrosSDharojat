@@ -15,7 +15,7 @@ import main.mainClass;
  * @author asus
  */
 public class EditFormP extends javax.swing.JFrame {
-
+                                                                                                                                                    
     /**
      * Creates new form editFromP
      */
@@ -23,7 +23,7 @@ public class EditFormP extends javax.swing.JFrame {
 
         initComponents();
 
-        // Set nilai-nilai awal dari data yang akan diedit
+        // Set nilai awal data yang mau diedit
         txtIdEdit.setText(id_produk);
         txtKpEdit.setText(kode_produk);
         txtNpEdit.setText(nama_produk);
@@ -223,7 +223,7 @@ public class EditFormP extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void saveChanges() {
-    // Ambil nilai-nilai yang telah diubah dari komponen GUI
+    // Ambil nilai yang sudah diubah komponen GUI
     String id_produk = txtIdEdit.getText();
     String kode_produk = txtKpEdit.getText();
     String nama_produk = txtNpEdit.getText();
@@ -231,7 +231,6 @@ public class EditFormP extends javax.swing.JFrame {
     String harga = txtHrEdit.getText();
     String stok = txtStEdit.getText();
 
-    // Validasi data
     if (id_produk.isEmpty() || kode_produk.isEmpty() || nama_produk.isEmpty() || kategori.isEmpty() || harga.isEmpty() || stok.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Silahkan isi semua data produk.");
         return;
@@ -249,16 +248,11 @@ public class EditFormP extends javax.swing.JFrame {
         preparedStatement.setString(5, stok);
         preparedStatement.setString(6, id_produk);
 
-        // Eksekusi pernyataan SQL untuk memperbarui data di database
         int rowsAffected = preparedStatement.executeUpdate();
         
-        // Panggil metode displayDataP pada objek newGudang untuk menampilkan kembali data yang diperbarui di tabel
         newGudang.displayDataP("");
-
-        // Berikan pesan bahwa perubahan telah disimpan
         JOptionPane.showMessageDialog(this, "Perubahan berhasil disimpan. Jumlah baris yang terpengaruh: " + rowsAffected);
-
-        // Tutup formulir pengeditan setelah perubahan disimpan
+        
         dispose();
 
     } catch (SQLException e) {
